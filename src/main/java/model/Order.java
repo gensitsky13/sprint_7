@@ -1,8 +1,7 @@
 package model;
 
-import java.util.List;
-
 public class Order {
+
     private String firstName;
     private String lastName;
     private String address;
@@ -11,10 +10,20 @@ public class Order {
     private int rentTime;
     private String deliveryDate;
     private String comment;
-    private List<String> color;
+    private String[] color;
 
-    public Order(String firstName, String lastName, String address, String metroStation,
-                 String phone, int rentTime, String deliveryDate, String comment, List<String> color) {
+    public Order() {
+    }
+
+    public Order(String firstName,
+                 String lastName,
+                 String address,
+                 String metroStation,
+                 String phone,
+                 int rentTime,
+                 String deliveryDate,
+                 String comment,
+                 String[] color) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
@@ -26,29 +35,75 @@ public class Order {
         this.color = color;
     }
 
-    // Геттеры — обязательны для сериализации в JSON!
-    public String getFirstName() { return firstName; }
-    public String getLastName() { return lastName; }
-    public String getAddress() { return address; }
-    public String getMetroStation() { return metroStation; }
-    public String getPhone() { return phone; }
-    public int getRentTime() { return rentTime; }
-    public String getDeliveryDate() { return deliveryDate; }
-    public String getComment() { return comment; }
-    public List<String> getColor() { return color; }
+    public String getFirstName() {
+        return firstName;
+    }
 
-    // Фабрика для удобства
-    public static Order defaultOrder() {
-        return new Order(
-                "Иван",
-                "Иванов",
-                "Москва",
-                "Черкизовская",
-                "+79990000000",
-                5,
-                "2025-12-01",
-                "Test comment",
-                List.of("BLACK")
-        );
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String getMetroStation() {
+        return metroStation;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public int getRentTime() {
+        return rentTime;
+    }
+
+    public String getDeliveryDate() {
+        return deliveryDate;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public String[] getColor() {
+        return color;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setMetroStation(String metroStation) {
+        this.metroStation = metroStation;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public void setRentTime(int rentTime) {
+        this.rentTime = rentTime;
+    }
+
+    public void setDeliveryDate(String deliveryDate) {
+        this.deliveryDate = deliveryDate;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public void setColor(String[] color) {
+        this.color = color;
     }
 }

@@ -1,41 +1,58 @@
 package tests;
 
 import client.OrderClient;
-import config.BaseTest;
 import model.Order;
-
+import config.BaseTest;
+import org.apache.http.HttpStatus;
 import org.junit.Test;
 
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.notNullValue;
 
-import io.qameta.allure.Epic;
-import io.qameta.allure.Feature;
-import io.qameta.allure.Description;
-import io.qameta.allure.Severity;
-import io.qameta.allure.SeverityLevel;
-import io.qameta.allure.Step;
-
-@Epic("API Tests")
-@Feature("Order Creation")
 public class CreateOrderTest extends BaseTest {
 
     private final OrderClient orderClient = new OrderClient();
 
-    @Test
-    @Severity(SeverityLevel.CRITICAL)
-    @Description("Проверяем успешное создание заказа и получение track номера")
-    public void canCreateOrder() {
-
-        Order order = Order.defaultOrder();
-
-        createOrder(order);
+    private Order buildOrder(String[] colors) {
+        return new Order(
+                "Иван",
+                "Иванов",
+                "Москва, Тверская 1",
+                "4",
+                "+79990000001",
+                5,
+                "2025-12-10",
+                "Позвонить за час",
+                colors
+        );
     }
 
-    @Step("Создаём заказ и проверяем статус 201 и наличие track")
-    public void createOrder(Order order) {
+    @Test
+    public void canCreateOrderWithBlackColor() {
+        Order order = buildOrder(new String[]{"BLACK"});
 
         orderClient.createOrder(order)
-                .statusCode(201)
+                .then()
+                .statusCode(HttpStatus.SC_CREATED)
+                .body("track", notNullValue());
+    }
+
+    @Test
+    public void canCreateOrderWithGreyColor() {
+        Order order = buildOrder(new String[]{"GREY"});
+
+        orderClient.createOrder(order)
+                .then()
+                .statusCode(HttpStatus.SC_CREATED)
+                .body("track", notNullValue());
+    }
+
+    @Test
+    public void canCreateOrderWithBothColors() {
+        Order order = buildOrder(new String[]{"BLACK", "GREY"});
+
+        orderClient.createOrder(order)
+                .then()
+                .statusCode(HttpStatus.SC_CREATED)
                 .body("track", notNullValue());
     }
 }

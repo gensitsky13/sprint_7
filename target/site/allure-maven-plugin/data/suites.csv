@@ -1,5 +1,0 @@
-"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
-"Проверяем успешное создание заказа и получение track номера","667","canCreateOrder","","Wed Nov 26 21:14:24 IST 2025","passed","Wed Nov 26 21:14:25 IST 2025","","tests.CreateOrderTest","tests.CreateOrderTest","canCreateOrder"
-"Проверяем, что список заказов не пустой","11383","ordersListIsNotEmpty","","Wed Nov 26 21:14:09 IST 2025","passed","Wed Nov 26 21:14:21 IST 2025","","tests.OrderListTest","tests.OrderListTest","ordersListIsNotEmpty"
-"Проверяем, что курьер может быть успешно создан и затем авторизован","1992","courierCanBeCreated","","Wed Nov 26 21:14:22 IST 2025","passed","Wed Nov 26 21:14:24 IST 2025","","tests.CourierCreateTest","tests.CourierCreateTest","courierCanBeCreated"
-"Проверяем, что курьер может успешно войти в систему после регистрации","1502","courierCanLogin","","Wed Nov 26 21:14:21 IST 2025","passed","Wed Nov 26 21:14:22 IST 2025","","tests.CourierLoginTest","tests.CourierLoginTest","courierCanLogin"

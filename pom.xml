@@ -12,6 +12,7 @@
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
         <!-- версия weaver-а для Allure + AspectJ -->
         <aspectj.version>1.9.22</aspectj.version>
         <!-- версия JUnit 4 -->
@@ -72,11 +73,18 @@
             <artifactId>commons-lang3</artifactId>
             <version>3.19.0</version>
         </dependency>
+
+        <!-- HttpStatus: SC_OK, SC_CREATED и т.п. -->
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.14</version>
+        </dependency>
     </dependencies>
 
     <build>
         <plugins>
-            <!-- Плагин запуска тестов + интеграция с Allure через AspectJ -->
+            <!-- ЕДИНСТВЕННЫЙ surefire-плагин: запуск тестов + Allure + AspectJ -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -84,12 +92,23 @@
                 <configuration>
                     <testFailureIgnore>false</testFailureIgnore>
                     <useModulePath>false</useModulePath>
+
+                    <!-- Javaagent для AspectJ (Allure) -->
                     <argLine>
                         -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
                     </argLine>
+
+                    <!-- Подключаем Allure как JUnit4 listener -->
+                    <properties>
+                        <property>
+                            <name>listener</name>
+                            <value>io.qameta.allure.junit4.AllureJunit4</value>
+                        </property>
+                    </properties>
+
+                    <!-- Куда складывать результаты отчёта -->
                     <systemProperties>
                         <property>
-                            <!-- папка, в которую будут генерироваться результаты Allure -->
                             <name>allure.results.directory</name>
                             <value>${project.build.directory}/allure-results</value>
                         </property>
@@ -109,31 +128,6 @@
                 <groupId>io.qameta.allure</groupId>
                 <artifactId>allure-maven</artifactId>
                 <version>2.16.1</version>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.5.4</version>
-                <configuration>
-                    <testFailureIgnore>false</testFailureIgnore>
-                    <useModulePath>false</useModulePath>
-
-                    <!-- Подключаем Allure как JUnit4 listener -->
-                    <properties>
-                        <property>
-                            <name>listener</name>
-                            <value>io.qameta.allure.junit4.AllureJunit4</value>
-                        </property>
-                    </properties>
-
-                    <!-- Куда складывать результаты отчёта -->
-                    <systemProperties>
-                        <property>
-                            <name>allure.results.directory</name>
-                            <value>${project.build.directory}/allure-results</value>
-                        </property>
-                    </systemProperties>
-                </configuration>
             </plugin>
         </plugins>
     </build>
